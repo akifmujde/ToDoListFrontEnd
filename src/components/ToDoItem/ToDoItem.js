@@ -56,8 +56,10 @@ class ToDoItem extends Component{
         token: localStorage.getItem('token'),
         todo_item_id: item_id
       }).then((response) => {
-        alert(response.data.message);
-        window.location.reload();
+        if (response.data.result) {
+          window.location.reload();   
+      }
+      else alert(response.data.message);
       });
     }
 
