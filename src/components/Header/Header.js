@@ -16,7 +16,6 @@ class Header extends Component{
             token: localStorage.getItem('token')
         }).then((response) => {
             if(response.data.result){
-                alert(response.data.message);
                 localStorage.removeItem('token');
                 window.location.reload();
             }

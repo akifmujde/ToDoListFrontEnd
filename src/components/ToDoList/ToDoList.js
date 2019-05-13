@@ -28,13 +28,12 @@ class ToDoList extends Component{
       });
     }
 
-    deleteList(e){
+    deleteList(list_id){
       if(window.confirm("Are you sure !")){
         axios.post("http://localhost:8080/todolist/deletelist",{
           token: localStorage.getItem('token'),
-          list_id: e.target.id}
+          list_id: list_id}
           ).then((response) => {
-          alert(response.data.message);
           window.location.reload();
         })
       }
@@ -46,7 +45,6 @@ class ToDoList extends Component{
           token: localStorage.getItem('token'),
           name: this.state.name
         }).then((response) => {
-          alert(response.data.message);
           window.location.reload();
         })
       }
@@ -72,7 +70,7 @@ class ToDoList extends Component{
             <td>
               <Link className="btn btn-primary" to={'/todolist/'+list.id} >List Items</Link>
               &nbsp;&nbsp;&nbsp;
-              <input type="button" className="btn btn-danger" id={list.id} value="Delete" onClick={this.deleteList}/>
+              <input type="button" className="btn btn-danger" value="Delete" onClick={() =>this.deleteList(list.id)}/>
             </td>
           </tr>
         );

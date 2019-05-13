@@ -22,12 +22,11 @@ class ToDoItem extends Component{
 
     }
     componentWillMount(){
-alert(1);
       axios.post("http://localhost:8080/todolist/todoitem/listoftodoitem/",{
         token: localStorage.getItem('token'),
         list_id: this.state.list_id
-      }).then((response) => {
-        alert(response.data);
+      }).
+      then((response) => {
         if(response.data.result){
           document.getElementById("list_name").innerHTML = response.data.list_name;
           this.setState({
@@ -38,7 +37,17 @@ alert(1);
     }
 
     deleteItem(item_id){
-      alert(item_id);
+      axios.post("http://localhost:8080/todolist/todoitem/deleteitem",{
+        token: localStorage.getItem('token'),
+        id: item_id
+      }).then((response) => {
+        if(response.data.result){
+          window.location.reload();
+        }
+        else{
+          alert(response.data.message);
+        }
+      })
     }
 
     markItem(item_id){
@@ -62,7 +71,6 @@ alert(1);
           description: this.state.description,
           deadline: this.state.deadline
         }).then((response) => {
-          alert(response.data.message);
           window.location.reload();
         })
       }

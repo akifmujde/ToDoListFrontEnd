@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    background-color: white;
+    background-color: #0092B2;
 }
 h1, h2{
     text-align: center;
@@ -20,8 +20,8 @@ ul.topnav {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    border: 1px solid #e7e7e7;
-    background-color: #f3f3f3;
+    background-color: #020E17;
+    border:0;
   }
   
   ul.topnav li {float: left;}
@@ -34,7 +34,10 @@ ul.topnav {
     text-decoration: none;
   }
   
-  ul.topnav li a:hover {background-color: #ddd;}
+  ul.topnav li a:hover, a:active {
+    color:white;
+    background-color: #05C148;
+  }
   
   ul.topnav li.right {float: right;}
   
