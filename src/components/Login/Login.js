@@ -64,7 +64,7 @@ class Login extends Component {
             
             <label for="mail">E-Mail:</label>
             <input type="email" class="form-control" id="mail" name="mail" onChange={this.onChange}/>
-
+            <br />
             <label for="pwd">Password:</label>
             <input type="password" class="form-control" id="pwd" name="password" onChange={this.onChange}/>
             <br/>

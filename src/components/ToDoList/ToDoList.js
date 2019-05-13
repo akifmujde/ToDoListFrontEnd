@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import axios from 'axios'
-import {Redirect} from 'react-router-dom';
+import {Redirect,Link} from 'react-router-dom';
 import './ToDoList.css'
 
 class ToDoList extends Component{
@@ -12,8 +12,7 @@ class ToDoList extends Component{
             lists: [],
             name: ''
         };
-
-        this.showListItem = this.showListItem.bind(this);
+        
         this.deleteList = this.deleteList.bind(this);
         this.onChange = this.onChange.bind(this);
         this.createList = this.createList.bind(this);
@@ -28,12 +27,6 @@ class ToDoList extends Component{
           })
         }
       });
-    }
-
-    showListItem(e){
-      
-
-      alert(e.target.id);
     }
 
     deleteList(e){
@@ -73,7 +66,7 @@ class ToDoList extends Component{
             <td>{list.created_date}</td>
             <td>{list.updated_date}</td>
             <td>
-              <input type="button" className="btn btn-primary" id={list.id} value="List Detail" onClick={this.showListItem}/>
+              <Link className="btn btn-primary" to={'/todolist/'+list.id} >List Items</Link>
               &nbsp;&nbsp;&nbsp;
               <input type="button" className="btn btn-danger" id={list.id} value="Delete List!" onClick={this.deleteList}/>
             </td>

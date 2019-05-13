@@ -8,6 +8,8 @@ import Login from "./components/Login/Login"
 import Registration from "./components/Resigstration/Registration"
 import Header from './components/Header/Header'
 import ToDoList from './components/ToDoList/ToDoList'
+import ToDoItem from './components/ToDoItem/ToDoItem'
+import ItemDependency from './components/ToDoItem/ItemDependency'
 
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
           <Route path="/login" component ={Login} exact/>
           <Route path="/registration" component ={Registration} exact/>
           <Route path="/todolist" component ={ToDoList} exact/>
+          <Route path="/todolist/:id" component ={ToDoItem} exact/>
+          <Route path="/todolist/:list_id/:item_id" component ={ItemDependency} exact/>
           <Route component ={Error}/>
         </Switch>
       </div>
