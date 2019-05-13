@@ -14,6 +14,17 @@ class ItemDependency extends Component{
         }
     }
 
+    componentWillMount(){
+        axios.post("http://localhost:8080/todolist/todoitem/showdependencies",{
+            token: localStorage.getItem('token'),
+            todo_item_id: this.state.item_id
+        }).then((response) => {
+            if(response.data.result){
+            console.log(response.data);
+            }
+        })
+    }
+
     render(){
         
         return(

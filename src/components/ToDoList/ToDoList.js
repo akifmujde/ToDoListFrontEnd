@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 import {Redirect,Link} from 'react-router-dom';
-import './ToDoList.css'
 
 class ToDoList extends Component{
 
@@ -42,14 +41,19 @@ class ToDoList extends Component{
     }
 
     createList(){
+      if(this.state.name){
+        axios.post("http://localhost:8080/todolist/createlist",{
+          token: localStorage.getItem('token'),
+          name: this.state.name
+        }).then((response) => {
+          alert(response.data.message);
+          window.location.reload();
+        })
+      }
+      else{
+        alert("Name is null!");
+      }
       
-      axios.post("http://localhost:8080/todolist/createlist",{
-        token: localStorage.getItem('token'),
-        name: this.state.name
-      }).then((response) => {
-        alert(response.data.message);
-        window.location.reload();
-      })
     }
 
     onChange(e){
@@ -68,7 +72,7 @@ class ToDoList extends Component{
             <td>
               <Link className="btn btn-primary" to={'/todolist/'+list.id} >List Items</Link>
               &nbsp;&nbsp;&nbsp;
-              <input type="button" className="btn btn-danger" id={list.id} value="Delete List!" onClick={this.deleteList}/>
+              <input type="button" className="btn btn-danger" id={list.id} value="Delete" onClick={this.deleteList}/>
             </td>
           </tr>
         );
