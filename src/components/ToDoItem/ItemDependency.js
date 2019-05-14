@@ -30,9 +30,6 @@ class ItemDependency extends Component{
                     dependencies: response.data.not_dependent_items
                 })
             }
-            else{
-                alert(response.data.message);
-            }
         });
 
         axios.post("http://localhost:8080/todolist/todoitem/alldepencenciesitem",{
