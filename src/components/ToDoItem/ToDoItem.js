@@ -9,9 +9,12 @@ class ToDoItem extends Component{
 
         this.state = {
             lists: [],
+            filter_items: [],
             name: '',
             description: '',
             deadline: '', 
+            filter_name: '',
+            status_id: '',
             list_id: match.params.id
         };
 
@@ -19,6 +22,7 @@ class ToDoItem extends Component{
         this.onChange = this.onChange.bind(this);
         this.markItem = this.markItem.bind(this);
         this.createItem = this.createItem.bind(this);
+        this.filterItem = this.filterItem.bind(this);
 
     }
     componentWillMount(){
@@ -86,6 +90,21 @@ class ToDoItem extends Component{
       this.setState({[e.target.name]:e.target.value});
     }
 
+    filterItem(){
+      axios.post('http://localhost:8080/todolist/todoitem/filteritem',{
+        token: localStorage.getItem('token'),
+        name: this.state.filter_name,
+        status_id: this.state.status_id,
+        list_id: this.state.list_id
+      }).then((response) => {
+        if(response.data.result){
+          this.setState({
+            filter_items: response.data.toDoItems
+          });
+        }
+      });
+    }
+
 
     render(){
 
@@ -122,23 +141,43 @@ class ToDoItem extends Component{
 
       return(
         <div className="container-fluid">
-        <h2 id="list_name"></h2>
-        <label>Create new item.</label>
-            <div className="row">
-              <div className="col-md-3 col-lg-3">
-                <input type="text" id="name" name="name" onChange={this.onChange} className="form-control" placeholder="Name"/>
-              </div>
-              <div className="col-md-5 col-lg-5">
-                <input type="text" id="description" name="description" onChange={this.onChange} className="form-control" placeholder="Description"/>
-              </div>
-              <div className="col-md-2 col-lg-2">
-                <input type="date" id="deadline" name="deadline" onChange={this.onChange} className="form-control"/>
-              </div>
-              <div class="col-md-2 col-lg-2">
-                <input type="button" className="btn btn-success" value="Add a list item" onClick={this.createItem}/>
-              </div>
+          <h2 id="list_name"></h2>
+          <label>Create new item.</label>
+          <hr/>
+          <div className="row">
+            <div className="col-md-3 col-lg-3">
+              <input type="text" id="name" name="name" onChange={this.onChange} className="form-control" placeholder="Name"/>
             </div>
-            <br/>
+            <div className="col-md-5 col-lg-5">
+              <input type="text" id="description" name="description" onChange={this.onChange} className="form-control" placeholder="Description"/>
+            </div>
+            <div className="col-md-2 col-lg-2">
+              <input type="date" id="deadline" name="deadline" onChange={this.onChange} className="form-control"/>
+            </div>
+            <div class="col-md-2 col-lg-2">
+              <input type="button" className="btn btn-success" value="Add a list item" onClick={this.createItem}/>
+            </div>
+          </div>
+          <hr/>
+          <h3>Filter İtems</h3>
+          <hr />
+          <div className="row">
+            <div className="col-md-7 col-lg-7">
+              <input type="text" name="filter_name" onChange={this.onChange} className="form-control" placeholder="Name"/>
+            </div>
+            <div className="col-md-3 col-lg-3">
+              <select className="form-control" name="status_id" onChange={this.onChange}>
+                <option selected disabled>Select optinon</option>
+                <option value="1">Completed</option>
+                <option value="2">Not completed</option>
+              </select>
+            </div>
+            <div class="col-md-2 col-lg-2">
+              <input type="button" className="btn btn-success" value="Filter Item" onClick={this.filterItem}/>
+            </div>
+          </div>
+          <hr/>
+          <br/>
           <table className="table">
             <thead>
               <tr>
@@ -152,7 +191,7 @@ class ToDoItem extends Component{
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="table_items">
               {lists}
             </tbody>
           </table>
