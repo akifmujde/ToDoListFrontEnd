@@ -9,7 +9,6 @@ class ToDoItem extends Component{
 
         this.state = {
             lists: [],
-            filter_items: [],
             name: '',
             description: '',
             deadline: '', 
@@ -36,6 +35,7 @@ class ToDoItem extends Component{
           this.setState({
             lists: response.data.todoitems
           })
+
         }
       });
     }
@@ -77,7 +77,12 @@ class ToDoItem extends Component{
           description: this.state.description,
           deadline: this.state.deadline
         }).then((response) => {
-          window.location.reload();
+          if(!response.data.result){
+            alert(response.data.message);
+          }
+          else{
+            window.location.reload();
+          }
         })
       }
       else{
@@ -91,23 +96,35 @@ class ToDoItem extends Component{
     }
 
     filterItem(){
-      axios.post('http://localhost:8080/todolist/todoitem/filteritem',{
-        token: localStorage.getItem('token'),
-        name: this.state.filter_name,
-        status_id: this.state.status_id,
-        list_id: this.state.list_id
-      }).then((response) => {
-        if(response.data.result){
-          this.setState({
-            filter_items: response.data.toDoItems
-          });
-        }
-      });
+      if(this.state.status_id != 0){
+        axios.post('http://localhost:8080/todolist/todoitem/filteritem',{
+          token: localStorage.getItem('token'),
+          name: this.state.filter_name,
+          status_id: this.state.status_id,
+          list_id: this.state.list_id
+        }).then((response) => {
+          if(response.data.result){
+            this.setState({
+              lists: response.data.toDoItems
+            });
+  
+          }
+        });
+      }
+      else{
+        alert("Please select the status.");
+      }
+      
     }
 
 
     render(){
-
+      var date =  new Date();
+      var y = date.getFullYear();
+      var m = date.getMonth() + 1;
+      var d = date.getDate()+1;
+      var current_date = y + "-" + (m < 10 ? "0"+m : m) + "-" + (d < 10 ? "0"+d : d); 
+      
       let lists = this.state.lists.map((list) => {
         return(
           <tr>
@@ -142,7 +159,7 @@ class ToDoItem extends Component{
       return(
         <div className="container-fluid">
           <h2 id="list_name"></h2>
-          <label>Create new item.</label>
+          <h5>Create new item.</h5>
           <hr/>
           <div className="row">
             <div className="col-md-3 col-lg-3">
@@ -152,22 +169,22 @@ class ToDoItem extends Component{
               <input type="text" id="description" name="description" onChange={this.onChange} className="form-control" placeholder="Description"/>
             </div>
             <div className="col-md-2 col-lg-2">
-              <input type="date" id="deadline" name="deadline" onChange={this.onChange} className="form-control"/>
+              <input type="date" id="deadline" name="deadline" min={current_date} onChange={this.onChange} className="form-control" />
             </div>
             <div class="col-md-2 col-lg-2">
               <input type="button" className="btn btn-success" value="Add a list item" onClick={this.createItem}/>
             </div>
           </div>
           <hr/>
-          <h3>Filter İtems</h3>
+          <br/><br/>
           <hr />
           <div className="row">
-            <div className="col-md-7 col-lg-7">
+            <div className="col-md-2 col-lg-2">
               <input type="text" name="filter_name" onChange={this.onChange} className="form-control" placeholder="Name"/>
             </div>
-            <div className="col-md-3 col-lg-3">
+            <div className="col-md-2 col-lg-2">
               <select className="form-control" name="status_id" onChange={this.onChange}>
-                <option selected disabled>Select optinon</option>
+                <option selected disabled>Select status.</option>
                 <option value="1">Completed</option>
                 <option value="2">Not completed</option>
               </select>
@@ -175,9 +192,16 @@ class ToDoItem extends Component{
             <div class="col-md-2 col-lg-2">
               <input type="button" className="btn btn-success" value="Filter Item" onClick={this.filterItem}/>
             </div>
+
+            <div className="col-md-1 col-lg-1">
+
+            </div>
+
           </div>
+
           <hr/>
           <br/>
+         
           <table className="table">
             <thead>
               <tr>
