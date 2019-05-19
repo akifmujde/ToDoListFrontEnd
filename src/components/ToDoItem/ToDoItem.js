@@ -22,8 +22,11 @@ class ToDoItem extends Component{
         this.markItem = this.markItem.bind(this);
         this.createItem = this.createItem.bind(this);
         this.filterItem = this.filterItem.bind(this);
+        this.orderItem = this.orderItem.bind(this);
 
     }
+
+    // work
     componentWillMount(){
       axios.post("http://localhost:8080/todolist/todoitem/listoftodoitem/",{
         token: localStorage.getItem('token'),
@@ -39,7 +42,8 @@ class ToDoItem extends Component{
         }
       });
     }
-
+    
+    // work
     deleteItem(item_id){
       axios.post("http://localhost:8080/todolist/todoitem/deleteitem",{
         token: localStorage.getItem('token'),
@@ -54,6 +58,7 @@ class ToDoItem extends Component{
       })
     }
 
+    // work
     markItem(item_id){
       
       axios.post("http://localhost:8080/todolist/todoitem/markcompleted",{
@@ -95,6 +100,7 @@ class ToDoItem extends Component{
       this.setState({[e.target.name]:e.target.value});
     }
 
+    // work
     filterItem(){
       if(this.state.status_id != 0){
         axios.post('http://localhost:8080/todolist/todoitem/filteritem',{
@@ -117,6 +123,27 @@ class ToDoItem extends Component{
       
     }
 
+    orderItem(){
+      var index = document.getElementById("order_item").selectedIndex;
+      var order_items = document.getElementById("order_item").options;
+      alert(order_items[index].value + " " + order_items[index].id);
+      
+      axios.post("http://localhost:8080/todolist/todoitem/orderitem",{
+        token: localStorage.getItem('token'),
+        list_id: this.state.list_id,
+        column_name: order_items[index].value,
+        order_type: order_items[index].id
+      }).then((response) => {
+        if(response.data.result){
+          this.setState({
+            lists: response.data.toDoItems
+          });
+        }
+        else{
+          alert(response.data.message);
+        }
+      });
+    }
 
     render(){
       var date =  new Date();
@@ -179,7 +206,11 @@ class ToDoItem extends Component{
           <br/><br/>
           <hr />
           <div className="row">
-            <div className="col-md-2 col-lg-2">
+          
+            <div class="col-md-1 col-lg-1">
+              <h5>Filter Item</h5>
+            </div>
+            <div className="col-md-5 col-lg-5">
               <input type="text" name="filter_name" onChange={this.onChange} className="form-control" placeholder="Name"/>
             </div>
             <div className="col-md-2 col-lg-2">
@@ -189,13 +220,29 @@ class ToDoItem extends Component{
                 <option value="2">Not completed</option>
               </select>
             </div>
-            <div class="col-md-2 col-lg-2">
+            <div class="col-md-1 col-lg-1">
               <input type="button" className="btn btn-success" value="Filter Item" onClick={this.filterItem}/>
             </div>
 
-            <div className="col-md-1 col-lg-1">
-
+            <div class="col-md-1 col-lg-1">
+              <h5>Order Item</h5>
             </div>
+
+            <div className="col-md-2 col-lg-2">
+              <select className="form-control" id="order_item" onChange={this.orderItem}>
+                <option selected disabled>Select order type.</option>
+                <option value="created_date" id="asc" >Create Date ( Asc )</option>
+                <option value="created_date" id="desc" >Create Date ( Desc )</option>
+                <option value="deadline" id="asc" >Deadline ( Asc )</option>
+                <option value="deadline" id="desc" >Deadline ( Desc )</option>
+                <option value="name" id="asc" >Name ( Asc ) </option>
+                <option value="name" id="desc" >Name ( Desc ) </option>
+                <option value="status_id" id="asc" > Status ( Asc ) </option>
+                <option value="status_id" id="desc" > Status ( Desc ) </option>
+              </select>
+            </div>
+
+            
 
           </div>
 

@@ -143,68 +143,52 @@ class ItemDependency extends Component{
     
           return(
             <div className="container-fluid">
-            <h2 id="list_name"></h2>
-            <label>Create new item.</label>
-                <div className="row">
-                  <div className="col-md-3 col-lg-3">
-                    <input type="text" id="name" name="name" onChange={this.onChange} className="form-control" placeholder="Name"/>
-                  </div>
-                  <div className="col-md-5 col-lg-5">
-                    <input type="text" id="description" name="description" onChange={this.onChange} className="form-control" placeholder="Description"/>
-                  </div>
-                  <div className="col-md-2 col-lg-2">
-                    <input type="date" id="deadline" name="deadline" onChange={this.onChange} className="form-control"/>
-                  </div>
-                  <div class="col-md-2 col-lg-2">
-                    <input type="button" className="btn btn-success" value="Add a list item" onClick={this.createItem}/>
-                  </div>
-                </div>
-                <br/>
-                <hr />
-                    <h3>Item's can be added dependency items </h3>
-                <hr/>
-                <div className="row">
-                    <table className="table">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>List Name</th>
-                            <th>Description</th>
-                            <th>Created Date</th>
-                            <th>Updated Date</th>
-                            <th>Deadline</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            {dependencies}
-                        </tbody>
-                    </table>
-                </div>
-                <hr />
-                    <h3>Item's dependency items </h3>
-                <hr/>
-                <div className="row">
-                    <table className="table">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>List Name</th>
-                            <th>Description</th>
-                            <th>Created Date</th>
-                            <th>Updated Date</th>
-                            <th>Deadline</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            {toDoItems}
-                        </tbody>
-                    </table>
-                </div>
-                <br/><br/>
+              <h2 id="list_name"></h2>
+              <hr />
+                  <h3>Item's can be added dependency items </h3>
+              <hr/>
+              <div className="row">
+                  <table className="table">
+                      <thead>
+                      <tr>
+                          <th>#</th>
+                          <th>List Name</th>
+                          <th>Description</th>
+                          <th>Created Date</th>
+                          <th>Updated Date</th>
+                          <th>Deadline</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                          {dependencies}
+                      </tbody>
+                  </table>
+              </div>
+              <hr />
+                  <h3>Item's dependency items </h3>
+              <hr/>
+              <div className="row">
+                  <table className="table">
+                      <thead>
+                      <tr>
+                          <th>#</th>
+                          <th>List Name</th>
+                          <th>Description</th>
+                          <th>Created Date</th>
+                          <th>Updated Date</th>
+                          <th>Deadline</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                          {toDoItems}
+                      </tbody>
+                  </table>
+              </div>
+              <br/><br/>
             </div>
           );
     }

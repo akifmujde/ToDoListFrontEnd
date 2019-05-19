@@ -82,7 +82,7 @@ class ToDoList extends Component{
 
       return(
           <div className="container">
-          <label>Create new list.</label>
+          <h3>Create new list.</h3><br/>
             <div className="row">
               <div className="col-md-10 col-lg-10">
                 <input type="text" id="name" name="name" onChange={this.onChange} className="form-control" />
